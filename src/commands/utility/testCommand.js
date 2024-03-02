@@ -6,59 +6,73 @@ const { SlashCommandBuilder,
     // ButtonBuilder, ButtonStyle, 
 } = require('discord.js');
 
-function calculateNextWeekend() {
-    const currentTimeStamp = Date.now();
-    const currentDate = new Date(currentTimeStamp);
+function calculateNextWeek() {
+    let currentTimeStamp = Date.now();
+    let currentDate = new Date(currentTimeStamp);
+    const resultWeek = [];
 
     // let today = 6;
 
-    let daysUntilSaturday = 6 - currentDate.getDay();
-    if (currentDate.getDay() === 6 || currentDate.getDay() === 0) daysUntilSaturday += 7;
     const millisecondsInDay = 24 * 60 * 60 * 1000;
 
-    const nextSaturdayTimeStamp = currentTimeStamp + daysUntilSaturday * millisecondsInDay;
-    const nextSaturdayDate = new Date(nextSaturdayTimeStamp);
+    let daysUntilSunday;
 
-    // Calculate the timestamp of next Sunday
-    const nextSundayTimeStamp = nextSaturdayTimeStamp + millisecondsInDay;
-    const nextSundayDate = new Date(nextSundayTimeStamp);
+    if (currentDate.getDay() === 5) {
+        daysUntilSunday = 9;
+    } else if (currentDate.getDay() === 6) {
+        daysUntilSunday = 8;
+    } else if (currentDate.getDay() === 0) {
+        daysUntilSunday = 7;
+    } else {
+        daysUntilSunday = 6 - currentDate.getDay();
+    }
 
-    const nextMondayTimeStamp = nextSundayTimeStamp + millisecondsInDay;
-    const nextMondayDate = new Date(nextMondayTimeStamp);
-
-    console.log("Next Saturday:", nextSaturdayDate.toDateString());
-    console.log("Next Sunday:", nextSundayDate.toDateString());
-    console.log("Next Monday:", nextMondayDate.toDateString());
-
-    return {
-        nextSaturday: nextSaturdayDate.toDateString(),
-        nextSunday: nextSundayDate.toDateString(),
-        nextMonday: nextMondayDate.toDateString(),
-    };
+    for (let i = 0; i <= daysUntilSunday; i++) {
+        resultWeek.push(currentTimeStamp)
+        currentTimeStamp += millisecondsInDay;
+    }
+    return resultWeek;
 }
 
-const dateChoices = calculateNextWeekend();
-const dateChoicesArr = [{ name: dateChoices.nextSaturday, value: dateChoices.nextSaturday },
-{ name: dateChoices.nextSunday, value: dateChoices.nextSunday },
-]
+// console.log(calculateNextWeek());
 
-const dateChoicesArrHoliday = [{ name: dateChoices.nextSaturday, value: dateChoices.nextSaturday },
-{ name: dateChoices.nextSunday, value: dateChoices.nextSunday },
-{ name: dateChoices.nextMonday, value: dateChoices.nextMonday }
-]
+// const dateChoices = calculateNextWeekend();
+// const dateChoicesArr = [{ name: dateChoices.nextSaturday, value: dateChoices.nextSaturday },
+// { name: dateChoices.nextSunday, value: dateChoices.nextSunday },
+// ]
+
+// const dateChoicesArrHoliday = [{ name: dateChoices.nextSaturday, value: dateChoices.nextSaturday },
+// { name: dateChoices.nextSunday, value: dateChoices.nextSunday },
+// { name: dateChoices.nextMonday, value: dateChoices.nextMonday }
+// ]
+
+function createSelectMenuOptions(timestamps) {
+    let result = [];
+    for (let timestamp of timestamps) {
+        currentDate = new Date(timestamp)
+        const choice = new StringSelectMenuOptionBuilder()
+            .setLabel(`${currentDate.toLocaleDateString('en-US', { weekday: 'long' })} ${currentDate.toLocaleDateString()}`)
+            // .setDescription(`${currentDate.toLocaleDateString()}`)
+            .setValue(`${timestamp}`)
+        result.push(choice)
+    }
+    return result;
+};
+
+console.log(createSelectMenuOptions(calculateNextWeek()))
 
 module.exports = {
     cooldown: 5,
     //sets cooldown in seconds
     data: new SlashCommandBuilder()
         .setName('echo')
-        .setDescription('Replies with your input!')
-        // add isHoliday functionality
-        .addBooleanOption(option =>
-            option.setName('holiday')
-                .setDescription('Is Monday a Holiday')
-                .setRequired(true)
-        ),
+        .setDescription('Replies with your input!'),
+    // add isHoliday functionality
+    // .addBooleanOption(option =>
+    //     option.setName('holiday')
+    //         .setDescription('Is Monday a Holiday')
+    //         .setRequired(true)
+    // ),
 
     async execute(interaction) {
 
@@ -67,20 +81,13 @@ module.exports = {
         //     .setLabel('Confirm Date')
         //     .setStyle(ButtonStyle.Primary)
 
+        console.log(interaction.options.getBoolean('holiday'))
+
         const select = new StringSelectMenuBuilder()
             .setCustomId('starter')
             .setPlaceholder('Make a selection!')
-            .addOptions(
-                new StringSelectMenuOptionBuilder()
-                    .setLabel('Saturday')
-                    .setDescription(dateChoices.nextSaturday)
-                    .setValue(dateChoices.nextSaturday),
-                new StringSelectMenuOptionBuilder()
-                    .setLabel('Sunday')
-                    .setDescription(dateChoices.nextSunday)
-                    .setValue(dateChoices.nextSunday),
-            ).setMinValues(1)
-            .setMaxValues(2)
+            .addOptions(...createSelectMenuOptions(calculateNextWeek())).setMinValues(1)
+            .setMaxValues(7)
             ;
 
         const row = new ActionRowBuilder()
@@ -89,23 +96,8 @@ module.exports = {
         await interaction.reply({
             content: interaction.options.getString('category'),
             components: [row],
+            ephemeral: true
         });
 
-        // const filter = (i) => i.user.id === message.author.id;
-
-        // const collector = response.createMessageComponentCollector({
-        //     componentType: ComponentType.StringSelect,
-        //     filter
-        // });
-
-        // collector.on('collect', (interaction) => {
-        //     if (interaction.customId === 'starter') {
-        //         console.log(interaction)
-        //         interaction.reply("You have submitted a response.")
-        //     }
-        // })
-
-        // await interaction.reply(interaction.options.getString('category'));
-        // console.log(interaction.options)
     },
-};
+}; 

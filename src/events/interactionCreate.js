@@ -60,9 +60,14 @@ module.exports = {
                 }
             }
         } else if (interaction.isStringSelectMenu()) {
+            let dates = interaction.values.sort((a, b) => a - b)
+                .map(timestamp => {
+                    let currentDate = new Date(Number(timestamp));
+                    return `${currentDate.toLocaleDateString('en-US', { weekday: 'long' })} ${currentDate.toLocaleDateString()} `
+                })
             console.log('StringSelectMenu chosen. Values are', interaction.values)
-            await interaction.reply({ content: `${interaction.user.username} is hosting a game night! ${interaction.values}` })
-            await interaction.followUp("nice!")
+            await interaction.reply({ content: `${interaction.user.username} is hosting a game night! ${dates}` })
+            // await interaction.followUp("nice!")
         }
 
 
