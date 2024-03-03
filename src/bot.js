@@ -3,13 +3,16 @@ const path = require('node:path');
 require('dotenv').config();
 // console.log(process.env.DISCORDJS_BOT_TOKEN);
 
-const { Client, Collection, Events, GatewayIntentBits, IntentsBitField } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, IntentsBitField, GuildManager } = require('discord.js');
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
         IntentsBitField.Flags.GuildMembers,
         IntentsBitField.Flags.GuildMessages,
-        IntentsBitField.Flags.MessageContent
+        IntentsBitField.Flags.MessageContent,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildPresences
     ]
 });
 
@@ -19,6 +22,7 @@ const client = new Client({
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
+
 //Collections are extensions of the JS Map class
 
 const foldersPath = path.join(__dirname, 'commands');
@@ -50,7 +54,6 @@ for (const file of eventFiles) {
     if (event.once) {
         client.once(event.name, (...args) => event.execute(...args));
     } else {
-        console.log(event);
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
@@ -88,3 +91,13 @@ client.login(process.env.DISCORDJS_BOT_TOKEN);
 //     console.log(interaction);
 // })
 
+
+// (async function getGuild() {
+//     const guild = await client.guilds.fetch(process.env.GUILDID);
+//     const channel = await client.channels.fetch('1213173909185372184');
+//     console.log(channel);
+// })();
+
+// (async function getChannel() {
+//     const channel = await client.channels.fetch(1213173909185372184);
+// })();
