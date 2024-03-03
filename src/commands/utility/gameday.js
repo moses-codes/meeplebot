@@ -1,8 +1,8 @@
 const { SlashCommandBuilder,
     StringSelectMenuBuilder, StringSelectMenuOptionBuilder,
     ActionRowBuilder,
-    ComponentType,
-    messageLink
+    // ComponentType,
+    // messageLink
     // ButtonBuilder, ButtonStyle, 
 } = require('discord.js');
 
@@ -34,18 +34,6 @@ function calculateNextWeek() {
     return resultWeek;
 }
 
-// console.log(calculateNextWeek());
-
-// const dateChoices = calculateNextWeekend();
-// const dateChoicesArr = [{ name: dateChoices.nextSaturday, value: dateChoices.nextSaturday },
-// { name: dateChoices.nextSunday, value: dateChoices.nextSunday },
-// ]
-
-// const dateChoicesArrHoliday = [{ name: dateChoices.nextSaturday, value: dateChoices.nextSaturday },
-// { name: dateChoices.nextSunday, value: dateChoices.nextSunday },
-// { name: dateChoices.nextMonday, value: dateChoices.nextMonday }
-// ]
-
 function createSelectMenuOptions(timestamps) {
     let result = [];
     for (let timestamp of timestamps) {
@@ -67,12 +55,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('gameday')
         .setDescription('What day(s) do you want to game?'),
-    // add isHoliday functionality
-    // .addBooleanOption(option =>
-    //     option.setName('holiday')
-    //         .setDescription('Is Monday a Holiday')
-    //         .setRequired(true)
-    // ),
 
     async execute(interaction) {
 
@@ -85,8 +67,7 @@ module.exports = {
             .setCustomId('starter')
             .setPlaceholder('Make a selection!')
             .addOptions(...createSelectMenuOptions(calculateNextWeek())).setMinValues(1)
-            .setMaxValues(7)
-
+            .setMaxValues(7);
 
         const row = new ActionRowBuilder()
             .setComponents(select);
