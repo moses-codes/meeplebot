@@ -15,12 +15,11 @@ module.exports = {
             function createGameDayReply(dates) {
                 let message = '';
                 for (let i = 0; i < dates.length; i++) {
-                    message += `For ${dates[i]}react with ${emojis[i]}.\n`
+                    message += `For ${dates[i]}react with ${emojis[i]}.\n`;
                 }
                 return message;
             }
 
-            console.log(interaction.user);
             const dateRange = dates.length > 1 ? `${dates[0]} - ${dates[dates.length - 1]}` : `${dates[0]}`;
             const initialMessage = await interaction
                 .reply({ content: `<@${interaction.user.id}> is hosting game night! \n${createGameDayReply(dates)}` })
