@@ -59,14 +59,14 @@ function createSelectMenuOptions(timestamps) {
     return result;
 };
 
-console.log(createSelectMenuOptions(calculateNextWeek()))
+// console.log(createSelectMenuOptions(calculateNextWeek()))
 
 module.exports = {
     cooldown: 5,
     //sets cooldown in seconds
     data: new SlashCommandBuilder()
-        .setName('echo')
-        .setDescription('Replies with your input!'),
+        .setName('gameday')
+        .setDescription('What day(s) do you want to game?'),
     // add isHoliday functionality
     // .addBooleanOption(option =>
     //     option.setName('holiday')
@@ -81,14 +81,12 @@ module.exports = {
         //     .setLabel('Confirm Date')
         //     .setStyle(ButtonStyle.Primary)
 
-        console.log(interaction.options.getBoolean('holiday'))
-
         const select = new StringSelectMenuBuilder()
             .setCustomId('starter')
             .setPlaceholder('Make a selection!')
             .addOptions(...createSelectMenuOptions(calculateNextWeek())).setMinValues(1)
             .setMaxValues(7)
-            ;
+
 
         const row = new ActionRowBuilder()
             .setComponents(select);
