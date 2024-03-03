@@ -1,7 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
 require('dotenv').config();
-// console.log(process.env.DISCORDJS_BOT_TOKEN);
 
 const { Client, Collection, Events, GatewayIntentBits, IntentsBitField, GuildManager } = require('discord.js');
 const client = new Client({
@@ -12,7 +11,6 @@ const client = new Client({
         IntentsBitField.Flags.MessageContent,
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildPresences
     ]
 });
 
@@ -58,7 +56,6 @@ for (const file of eventFiles) {
     }
 }
 
-
 // client.once(Events.ClientReady, readyClient => {
 //     console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 // });
@@ -66,38 +63,3 @@ for (const file of eventFiles) {
 
 client.login(process.env.DISCORDJS_BOT_TOKEN);
 //create a connection to the discord api
-
-// client.on(Events.InteractionCreate, async interaction => {
-//     if (!interaction.isChatInputCommand()) return;
-
-//     const command = interaction.client.commands.get(interaction.commandName);
-
-//     if (!command) {
-//         console.error(`No matching command ${interaction.commandName} was found.`);
-//         return;
-//     }
-
-//     try {
-//         await command.execute(interaction);
-//     } catch (error) {
-//         console.error(error);
-//         if (interaction.replied || interaction.deferred) {
-//             await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-//         } else {
-//             await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-//         }
-//     }
-
-//     console.log(interaction);
-// })
-
-
-// (async function getGuild() {
-//     const guild = await client.guilds.fetch(process.env.GUILDID);
-//     const channel = await client.channels.fetch('1213173909185372184');
-//     console.log(channel);
-// })();
-
-// (async function getChannel() {
-//     const channel = await client.channels.fetch(1213173909185372184);
-// })();
