@@ -34,7 +34,7 @@ module.exports = {
             const gamingThread = await interaction.client
                 .channels.fetch(interaction.channelId)
                 .then(channel => channel.threads.create({
-                    name: `Session: Sometime b/t ${dateRange}`,
+                    name: `${dates.length > 1 ? `Session: Sometime b/t ${dateRange}` : `Session: Sometime ${dateRange}`}`,
                     reason: 'Creating a new gaming session thread.',
                 })
                     .catch(console.error))

@@ -24,7 +24,7 @@ function calculateNextWeek() {
     } else if (currentDate.getDay() === 0) {
         daysUntilSunday = 7;
     } else {
-        daysUntilSunday = 6 - currentDate.getDay();
+        daysUntilSunday = 7 - currentDate.getDay();
     }
 
     for (let i = 0; i <= daysUntilSunday; i++) {
@@ -59,14 +59,14 @@ module.exports = {
     async execute(interaction) {
 
         if (interaction.channel.isThread()) {
-            await interaction.reply({ content: 'This command cannot be used in threads.', ephemeral: true });
+            await interaction.reply({ content: '/meepday can only be used in channels.', ephemeral: true });
         } else {
 
             const select = new StringSelectMenuBuilder()
                 .setCustomId('starter')
                 .setPlaceholder('Make a selection!')
                 .addOptions(...createSelectMenuOptions(calculateNextWeek())).setMinValues(1)
-                .setMaxValues(7);
+                .setMaxValues(calculateNextWeek().length);
 
             const row = new ActionRowBuilder()
                 .setComponents(select);
