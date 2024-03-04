@@ -40,8 +40,6 @@ module.exports = {
                     .catch(console.error))
                 .catch(console.error);
 
-            // console.log(gamingThread);
-
             const filter = (reaction, user) => emojis.slice(0, dates.length).includes(reaction.emoji.name) && !user.bot;
             const collector = reply.createReactionCollector({ filter, time: 604_800_000, dispose: false });
 
@@ -56,17 +54,13 @@ module.exports = {
                 const threadMembers = await gamingThread.members.fetch();
                 for (let user of usersMap.keys()) {
                     if (!threadMembers.has(user)) {
-
                         await gamingThread.members.add(usersMap.get(user))
                             .then(console.log(`Adding ${user} to thread ${gamingThread.name}`))
                             .catch(error => console.error(error))
-
                     }
                 }
             };
-
             collector.on('end', collected => console.log(`Collected ${collected.size} items`));
-
 
         } catch (error) {
             console.error(error);

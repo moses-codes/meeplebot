@@ -62,11 +62,6 @@ module.exports = {
             await interaction.reply({ content: 'This command cannot be used in threads.', ephemeral: true });
         } else {
 
-            // const confirm = new ButtonBuilder()
-            //     .setCustomId('confirm')
-            //     .setLabel('Confirm Date')
-            //     .setStyle(ButtonStyle.Primary)
-
             const select = new StringSelectMenuBuilder()
                 .setCustomId('starter')
                 .setPlaceholder('Make a selection!')

@@ -69,7 +69,7 @@ module.exports = {
         counter = 0;
 
         membersToTag.forEach((meeple) => {
-            console.log('kijiji', meeple)
+            // console.log('kijiji', meeple)
             // if (membersToTag.size <= 2) {
 
             //     if (membersToTag.size === 1) {
@@ -101,7 +101,7 @@ module.exports = {
                 }
             })
             .filter(choice => {
-                console.log(choice);
+                // console.log(choice);
                 return popularEmojis.includes(choice.emoji);
             })
 
@@ -112,7 +112,7 @@ module.exports = {
             let result = 'The most popular choices are:\n';
             dateChoices.forEach((choice, index) => {
                 if (index === dateChoices.length - 1) {
-                    result += `and ${choice.date}.`;
+                    result += `and ${choice.date}`;
                 } else {
                     result += `${choice.date}\n`;
                 }
@@ -120,7 +120,7 @@ module.exports = {
             })
             dateChoices = result;
         }
-        console.log(meepleGreeting)
+        // console.log(meepleGreeting)
         await interaction.reply(meepleGreeting + '\n' + dateChoices + '.');
     },
 };
