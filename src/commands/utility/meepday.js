@@ -53,30 +53,35 @@ module.exports = {
     cooldown: 5,
     //sets cooldown in seconds
     data: new SlashCommandBuilder()
-        .setName('gameday')
+        .setName('meepday')
         .setDescription('What day(s) do you want to game?'),
 
     async execute(interaction) {
 
-        // const confirm = new ButtonBuilder()
-        //     .setCustomId('confirm')
-        //     .setLabel('Confirm Date')
-        //     .setStyle(ButtonStyle.Primary)
+        if (interaction.channel.isThread()) {
+            await interaction.reply({ content: 'This command cannot be used in threads.', ephemeral: true });
+        } else {
 
-        const select = new StringSelectMenuBuilder()
-            .setCustomId('starter')
-            .setPlaceholder('Make a selection!')
-            .addOptions(...createSelectMenuOptions(calculateNextWeek())).setMinValues(1)
-            .setMaxValues(7);
+            // const confirm = new ButtonBuilder()
+            //     .setCustomId('confirm')
+            //     .setLabel('Confirm Date')
+            //     .setStyle(ButtonStyle.Primary)
 
-        const row = new ActionRowBuilder()
-            .setComponents(select);
+            const select = new StringSelectMenuBuilder()
+                .setCustomId('starter')
+                .setPlaceholder('Make a selection!')
+                .addOptions(...createSelectMenuOptions(calculateNextWeek())).setMinValues(1)
+                .setMaxValues(7);
 
-        await interaction.reply({
-            content: interaction.options.getString('category'),
-            components: [row],
-            ephemeral: true
-        });
+            const row = new ActionRowBuilder()
+                .setComponents(select);
 
+            await interaction.reply({
+                content: interaction.options.getString('category'),
+                components: [row],
+                ephemeral: true
+            });
+
+        }
     },
 }; 
