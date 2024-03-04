@@ -36,8 +36,14 @@ module.exports = {
             for (let message of messageCache) {
                 if (message[1].position === 0) messageReactions = message[1];
             }
-            messageReactions = await messageReactions.reactions.cache
-                .catch(error => console.error(error, "The proper message could not be found."))
+
+            try {
+                messageReactions = await messageReactions.reactions.cache
+            } catch (error) {
+                console.error(error, "The proper message could not be found.")
+            }
+
+            // .catch(error => console.error(error, "The proper message could not be found."))
 
             let maximum = 0;
 

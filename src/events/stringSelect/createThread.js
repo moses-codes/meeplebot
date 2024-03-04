@@ -34,11 +34,10 @@ module.exports = {
             const gamingThread = await interaction.client
                 .channels.fetch(interaction.channelId)
                 .then(channel => channel.threads.create({
-                    name: `${dates.length > 1 ? `Session: Sometime b/t ${dateRange}` : `Session: Sometime ${dateRange}`}`,
+                    name: `Session: Sometime b/t ${dateRange}`,
                     reason: 'Creating a new gaming session thread.',
-                })
-                    .catch(console.error))
-                .catch(console.error);
+                }))
+            // .catch(console.error);
 
             const filter = (reaction, user) => emojis.slice(0, dates.length).includes(reaction.emoji.name) && !user.bot;
             const collector = reply.createReactionCollector({ filter, time: 604_800_000, dispose: false });
