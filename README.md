@@ -13,10 +13,11 @@ I utilized the Discord.js module to develop a Discord bot with three primary fun
 1. The bot allows users to input their availability for scheduling board game nights.
 2. It listens for user responses indicating their availability within the specified timeframe.
 3. It automatically adds the available users to a dedicated Discord thread for further coordination.
+4. It can tag users who responded to the most popular scheduling option.
 
 ## Optimizations
 
-Finding the balance between dividing code into sensible modules and segments that are too granular is something I still would like to work on. While I know how problems can be solved using code, Iwould love to explore further how to implement a highly maintainable structure from the get-go, rather than optimizing the structure as I go. 
+Finding the balance between dividing code into sensible modules and segments that are too granular is something I still would like to work on. While I know how problems can be solved using code, I would love to explore further how to implement a highly maintainable structure from the get-go, rather than optimizing the structure as I go. 
 
 ## Lessons Learned:
 
