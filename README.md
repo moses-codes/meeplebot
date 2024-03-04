@@ -1,7 +1,7 @@
 # meeplebot
 Meeplebot is a Discord bot that helps you schedule your game night. Best paired with my board game app, [MeepleMatch](https://github.com/moses-codes/meeplematch).
 
-![Meeplebot in action](https://i.ibb.co/pzwyRtf/Screenshot-176.png)
+![Meeplebot in action](https://i.ibb.co/5FSbxTM/Screenshot-179.png)
 
 ## How It's Made:
 
