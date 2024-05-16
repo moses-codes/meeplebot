@@ -8,7 +8,7 @@ Meeplebot is a Discord bot that helps you schedule your game night. Best paired 
 **Tech used:** Node.js, JavaScript, Discord.js
 
 Node.js is a powerful and versatile JavaScript runtime that allows for event-driven programming on the backend using JavaScript syntax. JavaScript's object-orientedness allows for a solid foundation for the manipulation of data. 
-I utilized the Discord.js module to develop a Discord bot with three primary functions:
+I utilized the Discord.js module to develop a Discord bot with four primary functions:
 
 1. The bot allows users to input their availability for scheduling board game nights.
 2. It listens for user responses indicating their availability within the specified timeframe.
