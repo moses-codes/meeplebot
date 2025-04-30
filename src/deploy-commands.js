@@ -8,6 +8,12 @@ const token = process.env.DISCORDJS_BOT_TOKEN;
 const clientId = process.env.CLIENTID;
 const guildId = process.env.GUILDID;
 
+// Validate required env vars
+if (!token || !clientId || !guildId) {
+    console.error("Missing environment variables. Check your .env file.");
+    process.exit(1);
+}
+
 const commands = [];
 
 const foldersPath = path.join(__dirname, 'commands');
@@ -46,6 +52,8 @@ const rest = new REST().setToken(token);
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
     } catch (error) {
         // And of course, make sure you catch and log any errors!
-        console.error(error);
+        console.error("Error deploying commands:", error.message);
+        //exit the current operation
+        process.exit(1);
     }
 })();
